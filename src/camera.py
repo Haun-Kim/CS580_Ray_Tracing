@@ -11,12 +11,12 @@ class Camera:
         look_at,
         screen_width=400,
         screen_height=300,
-        field_of_view=90.0,
+        field_of_view=90.0,  # degree
         aperture=0.0,
         focal_distance=1.0,
     ):
-        self.screen_width = screen_width
-        self.screen_height = screen_height
+        self.screen_width = screen_width    # output image width (# of pixels)
+        self.screen_height = screen_height  # output image height (# of pixels)
         self.aspect_ratio = float(screen_width) / screen_height
 
         self.look_from = look_from
@@ -59,10 +59,23 @@ class Camera:
         Returns:
         - A Ray object containing the origin, direction, and other information of the rays.
         """
-        raise NotImplementedError("TODO")
 
-        ray_origin = None
-        ray_dir = None
+        # self.x : (1, # of pixels)
+        # self.y : (1, # of pixels)
+        num_pixel = len(self.x)
+
+        ray_origin = self.look_from
+        if self.lens_radius != 0:
+            lx, ly = random_in_unit_disk(num_pixel)
+            ray_origin += self.lens_radius*(self.cameraRight*lx + self.cameraUp.ly)
+
+        # sensor coordinate with aliasing (~ U(-w/2,w/2))
+        # sensor coordinate(z=f) = pixel coordinate(z=1) * f
+        x = (self.x + (np.random.rand(num_pixel)-0.5)*(self.camera_width/self.screen_width)) * self.focal_distance
+        y = (self.y + (np.random.rand(num_pixel)-0.5)*(self.camera_height/self.screen_height)) * self.focal_distance
+
+        ray_dir = self.look_from + self.cameraFwd*self.focal_distance + self.cameraRight*x + self.cameraUp*y
+
         return Ray(
             origin=ray_origin,
             dir=ray_dir,
