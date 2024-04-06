@@ -115,7 +115,36 @@ class Cuboid_Collider(Collider):
           the ray distance to the intersection point (row 0)
           and the orientation of the intersection point (row 1).
         """
-        raise NotImplementedError("TODO")
+        O_local_basis = O.matmul(self.basis_matrix)
+        D_local_basis = D.matmul(self.basis_matrix)
+
+
+        tx1 = (self.lb_local_basis.x - O_local_basis.x) / D_local_basis.x
+        tx2 = (self.rt_local_basis.x - O_local_basis.x) / D_local_basis.x
+        ty1 = (self.lb_local_basis.y - O_local_basis.y) / D_local_basis.y
+        ty2 = (self.rt_local_basis.y - O_local_basis.y) / D_local_basis.y
+        tz1 = (self.lb_local_basis.z - O_local_basis.z) / D_local_basis.z
+        tz2 = (self.rt_local_basis.z - O_local_basis.z) / D_local_basis.z
+
+        tmin = np.maximum(np.maximum(np.minimum(tx1, tx2), np.minimum(ty1, ty2)), np.minimum(tz1, tz2))
+        tmax = np.minimum(np.minimum(np.maximum(tx1, tx2), np.maximum(ty1, ty2)), np.maximum(tz1, tz2))
+
+        hit = (tmin < tmax) & (tmax > 0)
+        hit_UPWARDS = tmin > 0
+        hit_UPDOWN = np.logical_not(hit_UPWARDS)
+
+        pred1 = hit & hit_UPWARDS
+        pred2 = hit & hit_UPDOWN
+        pred3 = True
+
+        return np.select(
+            [pred1, pred2, pred3],
+            [
+                [tmin, np.tile(UPWARDS, tmin.shape)],
+                [tmax, np.tile(UPDOWN, tmax.shape)],
+                FARAWAY,
+            ],
+        )
 
     def get_Normal(self, hit):
 

@@ -86,7 +86,7 @@ class Plane_Collider(Collider):
         hit_inside = (
                 (np.abs(M_C.dot(self.u_axis)) <= self.w)
                 & (np.abs(M_C.dot(self.v_axis)) <= self.h)
-                & (NdotC_O * NdotD > 0)
+                & (NdotC_O * NdotD > 0) # plane is in cameraFWD direction (not -cameraFWD)
         )
         hit_UPWARDS = NdotD < 0
         hit_UPDOWN = np.logical_not(hit_UPWARDS)
