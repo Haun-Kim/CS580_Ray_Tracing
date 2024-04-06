@@ -76,7 +76,13 @@ def get_raycolor(ray, scene) -> vec3:
     Returns:
     - A vec3 object containing the color of the ray after it intersects with the scene.
     """
-    raise NotImplementedError("TODO")
+    scene.collider_list = []
+
+    color = vec3(0, 0, 0)
+
+
+    return color
+
 
 def get_distances(
     ray, scene

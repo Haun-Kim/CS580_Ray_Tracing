@@ -64,10 +64,9 @@ class Camera:
         # self.y : (1, # of pixels)
         num_pixel = len(self.x)
 
-        ray_origin = self.look_from
-        if self.lens_radius != 0:
-            lx, ly = random_in_unit_disk(num_pixel)
-            ray_origin += self.lens_radius*(self.cameraRight*lx + self.cameraUp.ly)
+
+        lx, ly = random_in_unit_disk(num_pixel)
+        ray_origin = self.look_from + self.lens_radius*(self.cameraRight*lx + self.cameraUp*ly)
 
         # sensor coordinate with aliasing (~ U(-w/2,w/2))
         # sensor coordinate(z=f) = pixel coordinate(z=1) * f
