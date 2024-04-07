@@ -76,11 +76,10 @@ class Plane_Collider(Collider):
         N = self.normal
 
         NdotD = N.dot(D)
-        NdotD = np.where(NdotD == 0.0, NdotD + 0.0001, NdotD)  # avoid zero division
-
+        NdotD = np.where(NdotD == 0.0, NdotD + 0.0001, NdotD)
         NdotC_O = N.dot(self.center - O)
         d = D * NdotC_O / NdotD
-        M = O + d  # intersection point
+        M = O + d
         dis = d.length()
         M_C = M - self.center
         hit_inside = (
@@ -94,6 +93,7 @@ class Plane_Collider(Collider):
         pred1 = hit_inside & hit_UPWARDS
         pred2 = hit_inside & hit_UPDOWN
         pred3 = True
+
         return np.select(
             [pred1, pred2, pred3],
             [

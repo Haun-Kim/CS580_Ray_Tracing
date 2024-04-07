@@ -54,7 +54,6 @@ class Refractive(Material):
             sin2θt = (n1_div_n2) ** 2 * (1.0 - cosθi**2)
 
             # TODO: Compute complete fresnel term
-            F = None  # the computed fresnel term
 
             # TODO: Add the contribution of the reflected ray
             # color += ...  # the color of the reflected ray
@@ -62,6 +61,8 @@ class Refractive(Material):
             # TODO: Compute refraction
             # color += ... # the color of the refracted ray
 
+
             # TODO: Compute absorption effect
             # color *= ...  # the absorption effect
+
         return color

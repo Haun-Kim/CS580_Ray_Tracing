@@ -72,11 +72,9 @@ class Glossy(Material):
 
             if self.roughness != 0.0:
                 # TODO: Compute ray color using the Cook-Torrance model
-                raise NotImplementedError("TODO")
 
         # Reflection
         if ray.depth < hit.surface.max_ray_depth:
             # TODO: Compute color contribution from the reflected ray
-            raise NotImplementedError("TODO")
 
         return color

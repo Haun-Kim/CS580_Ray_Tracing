@@ -45,11 +45,11 @@ class Diffuse(Material):
         # TODO: If the ray intersects the surface for the first time,
         # we generate multiple secondary rays to solve the rendering equation.
         if ray.diffuse_reflections < 1:
-            raise NotImplementedError("TODO")
+
         # TODO: If the ray intersected with diffuse material more than once,
         # we generate only one secondary ray.
         elif ray.diffuse_reflections < self.max_diffuse_reflections:
-            raise NotImplementedError("TODO")
+
         # TODO: Stop tracing if the recursion depth exceeds the maximum depth.
         else:
             return color

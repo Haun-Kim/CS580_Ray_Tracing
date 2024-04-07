@@ -79,18 +79,20 @@ def get_raycolor(ray, scene) -> vec3:
 
     distance = []
     orientation = []
-    for collider in scene.colliders_list:
-        intersection = collider.get_intersection(ray)
+    for collider in scene.collider_list:
+        intersection = collider.intersect(ray.origin, ray.dir)
         distance.append(intersection[0])
         orientation.append(intersection[1])
 
     nearest = reduce(np.minimum, distance) # numpy array of nearest distance per ray : (1, # of ray)
     color = rgb(0., 0., 0.)
 
-    for i, collider in enumerate(scene.colliders_list):
+    for i, collider in enumerate(scene.collider_list):
 
         hit_check = (nearest != FARAWAY) & (distance[i] == nearest) # (1, # of ray) for a collider
-
+        # print("HEREE222")
+        # print(distance[i])
+        # print(nearest)
         if np.any(hit_check):
 
             material = collider.assigned_primitive.material

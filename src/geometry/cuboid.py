@@ -120,10 +120,11 @@ class Cuboid_Collider(Collider):
 
 
         tx1 = (self.lb_local_basis.x - O_local_basis.x) / D_local_basis.x
-        tx2 = (self.rt_local_basis.x - O_local_basis.x) / D_local_basis.x
         ty1 = (self.lb_local_basis.y - O_local_basis.y) / D_local_basis.y
-        ty2 = (self.rt_local_basis.y - O_local_basis.y) / D_local_basis.y
         tz1 = (self.lb_local_basis.z - O_local_basis.z) / D_local_basis.z
+
+        tx2 = (self.rt_local_basis.x - O_local_basis.x) / D_local_basis.x
+        ty2 = (self.rt_local_basis.y - O_local_basis.y) / D_local_basis.y
         tz2 = (self.rt_local_basis.z - O_local_basis.z) / D_local_basis.z
 
         tmin = np.maximum(np.maximum(np.minimum(tx1, tx2), np.minimum(ty1, ty2)), np.minimum(tz1, tz2))

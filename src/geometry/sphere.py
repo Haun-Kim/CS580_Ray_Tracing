@@ -36,7 +36,7 @@ class Sphere_Collider(Collider):
         """
         C = self.center
         C_O = self.center - O
-        O_C = -C_O
+        O_C = O - self.center
 
         b = O_C.dot(D)
         c = O_C.dot(O_C)-self.radius**2

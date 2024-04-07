@@ -72,7 +72,12 @@ class Camera:
         x = (self.x + (np.random.rand(num_pixel)-0.5)*(self.camera_width/self.screen_width)) * self.focal_distance
         y = (self.y + (np.random.rand(num_pixel)-0.5)*(self.camera_height/self.screen_height)) * self.focal_distance
 
-        ray_dir = self.look_from + self.cameraFwd*self.focal_distance + self.cameraRight*x + self.cameraUp*y
+        ray_dir = (self.look_from + self.cameraFwd*self.focal_distance + self.cameraRight*x + self.cameraUp*y - ray_origin).normalize()
+
+        # print(ray_origin)
+        # print(ray_dir)
+        # print(ray_origin.x.shape)
+        # print(ray_dir.x.shape)
 
         return Ray(
             origin=ray_origin,
