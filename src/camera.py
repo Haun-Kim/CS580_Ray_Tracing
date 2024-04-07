@@ -64,7 +64,6 @@ class Camera:
         # self.y : (1, # of pixels)
         num_pixel = len(self.x)
 
-
         lx, ly = random_in_unit_disk(num_pixel)
         ray_origin = self.look_from + self.lens_radius*(self.cameraRight*lx + self.cameraUp*ly)
 

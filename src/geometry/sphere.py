@@ -38,9 +38,9 @@ class Sphere_Collider(Collider):
         C_O = self.center - O
         O_C = -C_O
 
-        b = 2*O_C.dot(D)
+        b = O_C.dot(D)
         c = O_C.dot(O_C)-self.radius**2
-        Disc = np.square(b/2) - c
+        Disc = np.square(b) - c
 
         t1 = -b-np.sqrt(np.maximum(Disc, 0))
         t2 = -b+np.sqrt(np.maximum(Disc, 0))

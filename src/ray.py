@@ -76,12 +76,33 @@ def get_raycolor(ray, scene) -> vec3:
     Returns:
     - A vec3 object containing the color of the ray after it intersects with the scene.
     """
-    scene.collider_list = []
 
-    color = vec3(0, 0, 0)
+    distance = []
+    orientation = []
+    for collider in scene.colliders_list:
+        intersection = collider.get_intersection(ray)
+        distance.append(intersection[0])
+        orientation.append(intersection[1])
+
+    nearest = reduce(np.minimum, distance) # numpy array of nearest distance per ray : (1, # of ray)
+    color = rgb(0., 0., 0.)
+
+    for i, collider in enumerate(scene.colliders_list):
+
+        hit_check = (nearest != FARAWAY) & (distance[i] == nearest) # (1, # of ray) for a collider
+
+        if np.any(hit_check):
+
+            material = collider.assigned_primitive.material
+            hit = Hit(extract(hit_check, distance[i]), extract(hit_check, orientation[i]), material, collider, collider.assigned_primitive)
+            c = material.get_color(scene, ray.extract(hit_check), hit)
+
+            color += c.place(hit_check)
 
 
     return color
+
+
 
 
 def get_distances(
